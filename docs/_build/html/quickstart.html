@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick-start &mdash; news-classification 1.0 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pipeline walkthrough" href="pipeline.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            news-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick-start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-dependencies">Install dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-pipeline">Run the pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-notebooks">Interactive notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-findings">Key findings</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Pipeline walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_curves.html">Learning curves</a></li>
+<li class="toctree-l1"><a class="reference internal" href="investigation.html">Investigation Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">news-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick-start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick-start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Critical Finding</strong>: The dataset contains significant data leakage. The ‘subject’ field is perfectly correlated with labels, leading to unrealistically high accuracy (95-100%). See the Investigation Results section for details.</p>
+</div>
+<section id="install-dependencies">
+<h2>Install dependencies<a class="headerlink" href="#install-dependencies" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># fish/zsh/bash</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+<p>(macOS only) XGBoost depends on the LLVM OpenMP runtime. Install it if you haven’t already:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>libomp
+</pre></div>
+</div>
+</section>
+<section id="run-the-pipeline">
+<h2>Run the pipeline<a class="headerlink" href="#run-the-pipeline" title="Link to this heading"></a></h2>
+<p>The commands below assume you have the raw CSVs in <code class="docutils literal notranslate"><span class="pre">data/</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data cleaning &amp; parquet</span>
+python<span class="w"> </span>src/data/make_dataset.py<span class="w"> </span>--true_path<span class="w"> </span>data/True.csv<span class="w"> </span>--fake_path<span class="w"> </span>data/Fake.csv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output_path<span class="w"> </span>workdir/processed_data.parquet
+
+<span class="c1"># Text preprocessing (stop-words, stemming/lemmatisation)</span>
+python<span class="w"> </span>src/features/preprocess_text.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--processed_path<span class="w"> </span>workdir/processed_data.parquet<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output_path<span class="w"> </span>workdir/processed_data_clean.parquet
+
+<span class="c1"># TF-IDF + train/test split</span>
+python<span class="w"> </span>src/features/vectorize_split.py<span class="w"> </span>--clean_path<span class="w"> </span>workdir/processed_data_clean.parquet<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output_dir<span class="w"> </span>workdir/features<span class="w">  </span>--max_features<span class="w"> </span><span class="m">50000</span><span class="w">  </span>--ngram_min<span class="w"> </span><span class="m">1</span><span class="w"> </span>--ngram_max<span class="w"> </span><span class="m">2</span>
+
+<span class="c1"># Train &amp; evaluate models</span>
+python<span class="w"> </span>src/models/train_evaluate.py<span class="w"> </span>--feature_dir<span class="w"> </span>workdir/features<span class="w"> </span>--model_dir<span class="w"> </span>workdir/models<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--report_dir<span class="w"> </span>workdir/reports
+
+<span class="c1"># Feature-importance</span>
+python<span class="w"> </span>src/analysis/feature_importance.py<span class="w"> </span>--vectorizer_path<span class="w"> </span>workdir/features/vectorizer.joblib<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model_dir<span class="w"> </span>workdir/models<span class="w"> </span>--output_dir<span class="w"> </span>workdir/reports/importance
+</pre></div>
+</div>
+</section>
+<section id="interactive-notebooks">
+<h2>Interactive notebooks<a class="headerlink" href="#interactive-notebooks" title="Link to this heading"></a></h2>
+<p>Two notebooks are available for different purposes:</p>
+<ol class="arabic">
+<li><p><strong>Original Pipeline Overview</strong> (basic analysis):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>notebook<span class="w"> </span>notebooks/fake_news_pipeline_overview.ipynb
+</pre></div>
+</div>
+</li>
+<li><p><strong>Complete Analysis with Investigation</strong> (recommended):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>notebook<span class="w"> </span>notebooks/fake_news_classification_final.ipynb
+</pre></div>
+</div>
+<p>This notebook includes:</p>
+<ul class="simple">
+<li><p>Baseline models achieving 95-99% accuracy</p></li>
+<li><p>Enhanced models with <strong>100% accuracy</strong></p></li>
+<li><p>Investigation revealing data leakage issues</p></li>
+<li><p>Cross-source validation showing 99.5%+ accuracy even with content-only features</p></li>
+<li><p>Robustness recommendations for real-world deployment</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="key-findings">
+<h2>Key findings<a class="headerlink" href="#key-findings" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Data Leakage</strong>: Subject field perfectly correlates with labels</p></li>
+<li><p><strong>Style vs. Content</strong>: Models learn writing style, not fake news indicators</p></li>
+<li><p><strong>Limited Applicability</strong>: Models will fail on sophisticated fake news</p></li>
+<li><p><strong>Expected Real-World Performance</strong>: 70-85% F1 for truly generalizable models</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pipeline.html" class="btn btn-neutral float-right" title="Pipeline walkthrough" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, news-classification contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

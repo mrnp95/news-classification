@@ -1,0 +1,17 @@
+Data shape: (44898, 6)
+
+Label counts:
+label
+1    23481
+0    21417
+
+Subject counts (top 20):
+subject
+politicsNews       11272
+worldnews          10145
+News                9050
+politics            6841
+left-news           4459
+Government News     1570
+US_News              783
+Middle-east          778

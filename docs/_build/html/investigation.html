@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investigation Results &mdash; news-classification 1.0 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API reference" href="api.html" />
+    <link rel="prev" title="Learning curves" href="learning_curves.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            news-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick-start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Pipeline walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_curves.html">Learning curves</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Investigation Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#accuracy-investigation">100% Accuracy Investigation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#initial-observation">Initial Observation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feature-importance-analysis">Feature Importance Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subject-label-correlation">Subject-Label Correlation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cross-source-validation">Cross-Source Validation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#training-sources">Training Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-sources">Testing Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#results">Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#robustness-recommendations">Robustness Recommendations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#production-deployment">Production Deployment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#research-recommendations">Research Recommendations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">news-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Investigation Results</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/investigation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="investigation-results">
+<h1>Investigation Results<a class="headerlink" href="#investigation-results" title="Link to this heading"></a></h1>
+<p>This section documents our investigation into the perfect 100% accuracy achieved by the Enhanced XGBoost model and the subsequent robustness analysis.</p>
+<section id="accuracy-investigation">
+<h2>100% Accuracy Investigation<a class="headerlink" href="#accuracy-investigation" title="Link to this heading"></a></h2>
+<section id="initial-observation">
+<h3>Initial Observation<a class="headerlink" href="#initial-observation" title="Link to this heading"></a></h3>
+<p>Our <strong>Enhanced XGBoost model</strong> (which includes both TF-IDF and statistical features) achieved perfect classification:</p>
+<ul class="simple">
+<li><p>Accuracy: 100.00%</p></li>
+<li><p>Precision: 100.00%</p></li>
+<li><p>Recall: 100.00%</p></li>
+<li><p>F1 Score: 100.00%</p></li>
+</ul>
+<p>This perfect performance raised immediate red flags, prompting a deeper investigation.</p>
+</section>
+<section id="feature-importance-analysis">
+<h3>Feature Importance Analysis<a class="headerlink" href="#feature-importance-analysis" title="Link to this heading"></a></h3>
+<p>Analysis of feature importances revealed a shocking pattern <strong>for the Enhanced XGBoost model</strong>:</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Feature Importance Distribution (Enhanced XGBoost)</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 60.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature Type</p></th>
+<th class="head"><p>Importance %</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Lexical diversity</p></td>
+<td><p>42.42%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Word count</p></td>
+<td><p>24.49%</p></td>
+</tr>
+<tr class="row-even"><td><p>Character count</p></td>
+<td><p>22.98%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Capital ratio</p></td>
+<td><p>10.11%</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>All 50,000 TF-IDF features</strong></p></td>
+<td><p><strong>0.00%</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p>The Enhanced XGBoost model achieved perfect accuracy using <strong>only statistical features</strong>, completely ignoring the actual text content!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This finding is specific to the Enhanced XGBoost model. The baseline models (MultinomialNB, Logistic Regression, LinearSVC, and baseline XGBoost) used only TF-IDF features and would have non-zero importance values for text features. These baseline models achieved 95-99% accuracy using content-based features.</p>
+</div>
+</section>
+<section id="subject-label-correlation">
+<h3>Subject-Label Correlation<a class="headerlink" href="#subject-label-correlation" title="Link to this heading"></a></h3>
+<p>Further investigation revealed perfect correlation between news sources and labels:</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Subject Distribution by Label</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 37.5%" />
+<col style="width: 18.8%" />
+<col style="width: 18.8%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Subject</p></th>
+<th class="head"><p>Real</p></th>
+<th class="head"><p>Fake</p></th>
+<th class="head"><p>Percentage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Government News</p></td>
+<td><p>0</p></td>
+<td><p>1,570</p></td>
+<td><p>100% Fake</p></td>
+</tr>
+<tr class="row-odd"><td><p>Middle-east</p></td>
+<td><p>0</p></td>
+<td><p>778</p></td>
+<td><p>100% Fake</p></td>
+</tr>
+<tr class="row-even"><td><p>News</p></td>
+<td><p>0</p></td>
+<td><p>9,050</p></td>
+<td><p>100% Fake</p></td>
+</tr>
+<tr class="row-odd"><td><p>US_News</p></td>
+<td><p>0</p></td>
+<td><p>783</p></td>
+<td><p>100% Fake</p></td>
+</tr>
+<tr class="row-even"><td><p>left-news</p></td>
+<td><p>0</p></td>
+<td><p>4,459</p></td>
+<td><p>100% Fake</p></td>
+</tr>
+<tr class="row-odd"><td><p>politics</p></td>
+<td><p>0</p></td>
+<td><p>6,841</p></td>
+<td><p>100% Fake</p></td>
+</tr>
+<tr class="row-even"><td><p>politicsNews</p></td>
+<td><p>11,272</p></td>
+<td><p>0</p></td>
+<td><p>100% Real</p></td>
+</tr>
+<tr class="row-odd"><td><p>worldnews</p></td>
+<td><p>10,145</p></td>
+<td><p>0</p></td>
+<td><p>100% Real</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cross-source-validation">
+<h2>Cross-Source Validation<a class="headerlink" href="#cross-source-validation" title="Link to this heading"></a></h2>
+<p>To test true generalization capability, we implemented cross-source validation:</p>
+<section id="training-sources">
+<h3>Training Sources<a class="headerlink" href="#training-sources" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>politicsNews (Real)</p></li>
+<li><p>politics (Fake)</p></li>
+<li><p>News (Fake)</p></li>
+<li><p>Government News (Fake)</p></li>
+</ul>
+</section>
+<section id="testing-sources">
+<h3>Testing Sources<a class="headerlink" href="#testing-sources" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>worldnews (Real)</p></li>
+<li><p>left-news (Fake)</p></li>
+<li><p>Middle-east (Fake)</p></li>
+<li><p>US_News (Fake)</p></li>
+</ul>
+</section>
+<section id="results">
+<h3>Results<a class="headerlink" href="#results" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">Cross-Source Validation Results</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 36.8%" />
+<col style="width: 15.8%" />
+<col style="width: 15.8%" />
+<col style="width: 15.8%" />
+<col style="width: 15.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model Configuration</p></th>
+<th class="head"><p>Accuracy</p></th>
+<th class="head"><p>Precision</p></th>
+<th class="head"><p>Recall</p></th>
+<th class="head"><p>F1 Score</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Robust XGBoost (All features)</p></td>
+<td><p>99.46%</p></td>
+<td><p>99.92%</p></td>
+<td><p>98.62%</p></td>
+<td><p>99.26%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Content-Only XGBoost (TF-IDF only)</p></td>
+<td><p>99.67%</p></td>
+<td><p>99.82%</p></td>
+<td><p>99.29%</p></td>
+<td><p>99.55%</p></td>
+</tr>
+<tr class="row-even"><td><p>Noisy Statistical Features</p></td>
+<td><p>99.50%</p></td>
+<td><p>99.92%</p></td>
+<td><p>98.74%</p></td>
+<td><p>99.32%</p></td>
+</tr>
+</tbody>
+</table>
+<p>Even with cross-source validation, models achieve &gt;99% accuracy, indicating:</p>
+<ol class="arabic simple">
+<li><p>Systematic vocabulary differences between fake and real sources</p></li>
+<li><p>Limited dataset applicability for real-world fake news detection</p></li>
+</ol>
+</section>
+</section>
+<section id="robustness-recommendations">
+<h2>Robustness Recommendations<a class="headerlink" href="#robustness-recommendations" title="Link to this heading"></a></h2>
+<section id="production-deployment">
+<h3>Production Deployment<a class="headerlink" href="#production-deployment" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Cross-Source Validation is Mandatory</strong></p>
+<ul class="simple">
+<li><p>Always hold out entire news sources for testing</p></li>
+<li><p>Never mix articles from the same source in train/test sets</p></li>
+</ul>
+</li>
+<li><p><strong>Feature Selection</strong></p>
+<ul class="simple">
+<li><p>Use content-only features (TF-IDF) for better generalization</p></li>
+<li><p>Avoid statistical features that capture writing style</p></li>
+<li><p>Remove source-identifying terms (reuters, cnn, etc.)</p></li>
+</ul>
+</li>
+<li><p><strong>Performance Expectations</strong></p>
+<ul class="simple">
+<li><p>Realistic F1 score: 70-85% on truly diverse data</p></li>
+<li><p>Be skeptical of &gt;95% accuracy</p></li>
+<li><p>Test on external datasets before deployment</p></li>
+</ul>
+</li>
+<li><p><strong>Model Selection</strong></p>
+<ul class="simple">
+<li><p>Prefer simpler models (Logistic Regression) for interpretability</p></li>
+<li><p>Avoid complex ensembles that may overfit to subtle patterns</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="research-recommendations">
+<h3>Research Recommendations<a class="headerlink" href="#research-recommendations" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Dataset Requirements</strong></p>
+<ul class="simple">
+<li><p>Same topics covered by both fake and real sources</p></li>
+<li><p>Balanced representation across sources</p></li>
+<li><p>Temporal splits to test evolving patterns</p></li>
+</ul>
+</li>
+<li><p><strong>Alternative Approaches</strong></p>
+<ul class="simple">
+<li><p>Claim-level verification rather than document classification</p></li>
+<li><p>Cross-reference checking with reliable sources</p></li>
+<li><p>Stance detection combined with source credibility</p></li>
+</ul>
+</li>
+<li><p><strong>Evaluation Metrics</strong></p>
+<ul class="simple">
+<li><p>Cross-source validation should be standard</p></li>
+<li><p>Report performance degradation across domains</p></li>
+<li><p>Include adversarial examples in test sets</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h2>
+<p>The investigation reveals that this dataset suffers from severe source bias, making it unsuitable for building real-world fake news detection systems. The perfect accuracy is a symptom of the problem, not a success.</p>
+<p><strong>Key Takeaway</strong>: In fake news detection, if your model achieves &gt;95% accuracy, you’re likely detecting the publisher, not the veracity of the content.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="learning_curves.html" class="btn btn-neutral float-left" title="Learning curves" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, news-classification contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

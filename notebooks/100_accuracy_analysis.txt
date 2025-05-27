@@ -1,0 +1,33 @@
+DETAILED ANALYSIS OF 100% ACCURACY
+============================================================
+
+SUBJECT-LABEL DISTRIBUTION:
+                  Real   Fake  Total
+subject                             
+Government News      0   1570   1570
+Middle-east          0    778    778
+News                 0   9050   9050
+US_News              0    783    783
+left-news            0   4459   4459
+politics             0   6841   6841
+politicsNews     11272      0  11272
+worldnews        10145      0  10145
+All              21417  23481  44898
+
+TEXT LENGTH STATISTICS:
+            mean         std  min   max  median
+Real  395.594574  273.948006    4  5181   369.0
+Fake  437.930710  408.555516    2  8148   378.0
+
+FEATURE CORRELATIONS WITH LABEL:
+  question_count: 0.3197
+  exclamation_count: 0.2660
+  uppercase_ratio: 0.2554
+  text_length: 0.0602
+  avg_word_length: -0.0470
+
+CONCLUSIONS:
+- Subject field causes severe data leakage
+- Text length is significantly different between classes
+- Statistical features provide strong discriminative power
+- Model likely memorized source-specific patterns

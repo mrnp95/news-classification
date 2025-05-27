@@ -1,0 +1,175 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pipeline walkthrough &mdash; news-classification 1.0 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Learning curves" href="learning_curves.html" />
+    <link rel="prev" title="Quick-start" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            news-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick-start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pipeline walkthrough</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#detailed-steps">Detailed steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="learning_curves.html">Learning curves</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">news-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Pipeline walkthrough</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pipeline.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pipeline-walkthrough">
+<h1>Pipeline walkthrough<a class="headerlink" href="#pipeline-walkthrough" title="Link to this heading"></a></h1>
+<p>The project is structured as a <strong>linear sequence of reproducible scripts</strong>; each step reads
+inputs from <em>workdir</em> and writes outputs back to it.</p>
+<figure class="align-default" id="id1">
+<pre  class="mermaid">
+        graph TD;
+  A[Raw CSVs True.csv + Fake.csv] --&gt; B[make_dataset.py];
+  B --&gt; C[processed_data.parquet];
+  C --&gt; D[preprocess_text.py];
+  D --&gt; E[processed_data_clean.parquet];
+  E --&gt; F[vectorize_split.py];
+  F -.-&gt;|saves| G[features/ X_*.npz + y_*.npy];
+  G --&gt; H[train_evaluate.py];
+  H --&gt; I[models/*.joblib];
+  H --&gt; J[reports/plots+metrics];
+  I --&gt; K[feature_importance.py];
+  H --&gt; K;
+  K --&gt; L[importance/*.png + .csv];
+    </pre><figcaption>
+<p><span class="caption-text">High-level data flow</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="detailed-steps">
+<h2>Detailed steps<a class="headerlink" href="#detailed-steps" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Data loading &amp; cleaning</strong> – <cite>src/data/make_dataset.py</cite>
+* Adds binary label, removes nulls, merges <em>title</em> + <em>text</em> into <em>full_text</em>
+* Output: <cite>workdir/processed_data.parquet</cite></p></li>
+<li><p><strong>Exploratory analysis</strong> – <cite>src/analysis/eda.py</cite>
+* Generates class distribution, token length histograms, subject counts.</p></li>
+<li><p><strong>Text preprocessing</strong> – <cite>src/features/preprocess_text.py</cite>
+* Lower-case, punctuation &amp; digit removal, stop-word filtering (NLTK), WordNet lemmatisation.
+* Output: <cite>…_clean.parquet</cite> with <cite>clean_text</cite> column.</p></li>
+<li><p><strong>Vectorisation &amp; split</strong> – <cite>src/features/vectorize_split.py</cite>
+* TF-IDF (max 50 k vocab, 1–2-grams), stratified <cite>train_test_split</cite> (80/20).
+* Saves: <cite>X_train.npz</cite>, <cite>X_test.npz</cite>, <cite>y_train.npy</cite>, <cite>y_test.npy</cite> and <cite>vectorizer.joblib</cite>.</p></li>
+<li><p><strong>Model training &amp; evaluation</strong> – <cite>src/models/train_evaluate.py</cite>
+* Trains MultinomialNB, LogisticRegression, LinearSVC, and XGBoost.
+* Computes accuracy, precision, recall, F1, ROC-AUC; saves confusion matrices &amp; ROC curves.</p></li>
+<li><p><strong>Feature importance</strong> – <cite>src/analysis/feature_importance.py</cite>
+* Linear models: signed coefficients; MultinomialNB: log-prob diff; XGBoost: gain-based importance.
+* Saves CSV + bar plots for top words.</p></li>
+</ol>
+<p>All scripts accept command-line arguments so you can tweak paths and hyper-parameters.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick-start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="learning_curves.html" class="btn btn-neutral float-right" title="Learning curves" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, news-classification contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

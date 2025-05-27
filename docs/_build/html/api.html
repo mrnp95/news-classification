@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API reference &mdash; news-classification 1.0 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="Learning curves" href="learning_curves.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            news-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick-start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Pipeline walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_curves.html">Learning curves</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data.make_dataset.add_label_column"><code class="docutils literal notranslate"><span class="pre">add_label_column()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data.make_dataset.basic_cleaning"><code class="docutils literal notranslate"><span class="pre">basic_cleaning()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data.make_dataset.load_raw_data"><code class="docutils literal notranslate"><span class="pre">load_raw_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data.make_dataset.save_processed_data"><code class="docutils literal notranslate"><span class="pre">save_processed_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis.eda.generate_eda_report"><code class="docutils literal notranslate"><span class="pre">generate_eda_report()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis.eda.load_processed_data"><code class="docutils literal notranslate"><span class="pre">load_processed_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis.eda.plot_class_distribution"><code class="docutils literal notranslate"><span class="pre">plot_class_distribution()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis.eda.plot_subject_distribution"><code class="docutils literal notranslate"><span class="pre">plot_subject_distribution()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis.eda.plot_text_length_distribution"><code class="docutils literal notranslate"><span class="pre">plot_text_length_distribution()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features.preprocess_text.preprocess_dataset"><code class="docutils literal notranslate"><span class="pre">preprocess_dataset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features.preprocess_text.preprocess_text"><code class="docutils literal notranslate"><span class="pre">preprocess_text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features.preprocess_text.run_cli"><code class="docutils literal notranslate"><span class="pre">run_cli()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features.vectorize_split.vectorize_and_split"><code class="docutils literal notranslate"><span class="pre">vectorize_and_split()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#models.train_evaluate.evaluate_model"><code class="docutils literal notranslate"><span class="pre">evaluate_model()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#models.train_evaluate.fit_models"><code class="docutils literal notranslate"><span class="pre">fit_models()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#models.train_evaluate.load_features"><code class="docutils literal notranslate"><span class="pre">load_features()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#models.train_evaluate.plot_learning_curve_generic"><code class="docutils literal notranslate"><span class="pre">plot_learning_curve_generic()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis.feature_importance.get_feature_importance"><code class="docutils literal notranslate"><span class="pre">get_feature_importance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis.feature_importance.plot_top_features"><code class="docutils literal notranslate"><span class="pre">plot_top_features()</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">news-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-data.make_dataset">
+<span id="api-reference"></span><h1>API reference<a class="headerlink" href="#module-data.make_dataset" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="data.make_dataset.add_label_column">
+<span class="sig-name descname"><span class="pre">add_label_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/data/make_dataset.html#add_label_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.make_dataset.add_label_column" title="Link to this definition"></a></dt>
+<dd><p>Add a binary label column to the DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – Input DataFrame.</p></li>
+<li><p><strong>label</strong> (<em>int</em>) – Label to assign to all rows (0 for real, 1 for fake).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with an added <cite>label</cite> column.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="data.make_dataset.basic_cleaning">
+<span class="sig-name descname"><span class="pre">basic_cleaning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/data/make_dataset.html#basic_cleaning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.make_dataset.basic_cleaning" title="Link to this definition"></a></dt>
+<dd><p>Perform basic cleaning steps on the concatenated DataFrame.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Drop rows with any null values in critical columns (<cite>title</cite>, <cite>text</cite>).</p></li>
+<li><p>Combine <cite>title</cite> and <cite>text</cite> into a new column <cite>full_text</cite>.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – Concatenated DataFrame containing both real and fake news.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cleaned DataFrame with a new <cite>full_text</cite> column.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="data.make_dataset.load_raw_data">
+<span class="sig-name descname"><span class="pre">load_raw_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">true_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fake_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/data/make_dataset.html#load_raw_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.make_dataset.load_raw_data" title="Link to this definition"></a></dt>
+<dd><p>Load the raw True and Fake news datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_path</strong> (<em>Path</em>) – Path to True.csv file.</p></li>
+<li><p><strong>fake_path</strong> (<em>Path</em>) – Path to Fake.csv file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrames for authentic (True) and fake news articles, respectively.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[pd.DataFrame, pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="data.make_dataset.save_processed_data">
+<span class="sig-name descname"><span class="pre">save_processed_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/data/make_dataset.html#save_processed_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.make_dataset.save_processed_data" title="Link to this definition"></a></dt>
+<dd><p>Save the processed DataFrame to disk as a Parquet file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – Processed DataFrame.</p></li>
+<li><p><strong>output_path</strong> (<em>Path</em>) – Destination path for the output file. The parent directory will be created if it doesn’t exist.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-analysis.eda">
+<dt class="sig sig-object py" id="analysis.eda.generate_eda_report">
+<span class="sig-name descname"><span class="pre">generate_eda_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis/eda.html#generate_eda_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis.eda.generate_eda_report" title="Link to this definition"></a></dt>
+<dd><p>Run all EDA analyses and save outputs.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.eda.load_processed_data">
+<span class="sig-name descname"><span class="pre">load_processed_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/analysis/eda.html#load_processed_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis.eda.load_processed_data" title="Link to this definition"></a></dt>
+<dd><p>Load the parquet file produced by the data processing step.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.eda.plot_class_distribution">
+<span class="sig-name descname"><span class="pre">plot_class_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis/eda.html#plot_class_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis.eda.plot_class_distribution" title="Link to this definition"></a></dt>
+<dd><p>Plot the distribution of labels (real vs fake).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.eda.plot_subject_distribution">
+<span class="sig-name descname"><span class="pre">plot_subject_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis/eda.html#plot_subject_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis.eda.plot_subject_distribution" title="Link to this definition"></a></dt>
+<dd><p>Plot subject/topic counts per class if ‘subject’ column exists.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.eda.plot_text_length_distribution">
+<span class="sig-name descname"><span class="pre">plot_text_length_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis/eda.html#plot_text_length_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis.eda.plot_text_length_distribution" title="Link to this definition"></a></dt>
+<dd><p>Plot histogram of full_text lengths in tokens for each class.</p>
+</dd></dl>
+
+<dl class="py function" id="module-features.preprocess_text">
+<dt class="sig sig-object py" id="features.preprocess_text.preprocess_dataset">
+<span class="sig-name descname"><span class="pre">preprocess_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'full_text'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/features/preprocess_text.html#preprocess_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#features.preprocess_text.preprocess_dataset" title="Link to this definition"></a></dt>
+<dd><p>Apply <cite>preprocess_text</cite> to a DataFrame column.</p>
+<p>Adds a new column <cite>clean_text</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="features.preprocess_text.preprocess_text">
+<span class="sig-name descname"><span class="pre">preprocess_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/features/preprocess_text.html#preprocess_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#features.preprocess_text.preprocess_text" title="Link to this definition"></a></dt>
+<dd><p>Clean, tokenize, remove stopwords and lemmatize a single document.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Lower-case.</p></li>
+<li><p>Remove punctuation, digits &amp; special characters.</p></li>
+<li><p>Collapse multiple whitespaces.</p></li>
+<li><p>Remove stop-words.</p></li>
+<li><p>Lemmatize each remaining token.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Raw input text.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A space-separated string of processed tokens.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="features.preprocess_text.run_cli">
+<span class="sig-name descname"><span class="pre">run_cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/features/preprocess_text.html#run_cli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#features.preprocess_text.run_cli" title="Link to this definition"></a></dt>
+<dd><p>Command-line entry: read parquet, preprocess, write parquet.</p>
+</dd></dl>
+
+<dl class="py function" id="module-features.vectorize_split">
+<dt class="sig sig-object py" id="features.vectorize_split.vectorize_and_split">
+<span class="sig-name descname"><span class="pre">vectorize_and_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clean_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ngram_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(1,</span> <span class="pre">2)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/features/vectorize_split.html#vectorize_and_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#features.vectorize_split.vectorize_and_split" title="Link to this definition"></a></dt>
+<dd><p>Vectorise clean text using TF-IDF and split into train/test sets.</p>
+<dl class="simple">
+<dt>Saves:</dt><dd><ul class="simple">
+<li><p>vectorizer.joblib – fitted TfidfVectorizer</p></li>
+<li><p>X_train.npz / X_test.npz – sparse TF-IDF matrices</p></li>
+<li><p>y_train.npy / y_test.npy – label arrays</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-models.train_evaluate">
+<dt class="sig sig-object py" id="models.train_evaluate.evaluate_model">
+<span class="sig-name descname"><span class="pre">evaluate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">spmatrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/models/train_evaluate.html#evaluate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.train_evaluate.evaluate_model" title="Link to this definition"></a></dt>
+<dd><p>Evaluate a model and return metrics.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.train_evaluate.fit_models">
+<span class="sig-name descname"><span class="pre">fit_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">spmatrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">spmatrix</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/models/train_evaluate.html#fit_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.train_evaluate.fit_models" title="Link to this definition"></a></dt>
+<dd><p>Fit baseline and enhanced models.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.train_evaluate.load_features">
+<span class="sig-name descname"><span class="pre">load_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">spmatrix</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">spmatrix</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/models/train_evaluate.html#load_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.train_evaluate.load_features" title="Link to this definition"></a></dt>
+<dd><p>Load train/test sparse matrices and labels.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.train_evaluate.plot_learning_curve_generic">
+<span class="sig-name descname"><span class="pre">plot_learning_curve_generic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/train_evaluate.html#plot_learning_curve_generic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.train_evaluate.plot_learning_curve_generic" title="Link to this definition"></a></dt>
+<dd><p>Plot learning curve (train vs validation F1) for non-boosting models.</p>
+</dd></dl>
+
+<dl class="py function" id="module-analysis.feature_importance">
+<dt class="sig sig-object py" id="analysis.feature_importance.get_feature_importance">
+<span class="sig-name descname"><span class="pre">get_feature_importance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/analysis/feature_importance.html#get_feature_importance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis.feature_importance.get_feature_importance" title="Link to this definition"></a></dt>
+<dd><p>Return a DataFrame with feature and weight, handling various model types.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.feature_importance.plot_top_features">
+<span class="sig-name descname"><span class="pre">plot_top_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_imp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis/feature_importance.html#plot_top_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis.feature_importance.plot_top_features" title="Link to this definition"></a></dt>
+<dd><p>Plot top positive and negative features for linear models; just top for others.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="learning_curves.html" class="btn btn-neutral float-left" title="Learning curves" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, news-classification contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
